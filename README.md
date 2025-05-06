@@ -14,13 +14,9 @@ This repository contains my learning notes, tools, labs, and cheat sheets relate
 ---
 
 ## 📁 Repo Structure
-- `basics/` — Introductory concepts
-- `tools/` — Tool-specific notes
-- `labs/` — Practical lab exercises
-- `scripts/` — PowerShell or bash scripts
-- `cheat-sheets/` — Quick references
-- `resources/` — Useful links and learning material
-
+- `basics/blue teaming/` — Introductory concepts
+---
+## *avoid the resources folder *
 ---
 
 ## 🧠 Goal
