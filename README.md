@@ -16,7 +16,7 @@ This repository contains my learning notes, tools, labs, and cheat sheets relate
 ## 📁 Repo Structure
 - `basics/blue teaming/` — Introductory concepts
 ---
-## *avoid the resources folder *
+## *avoid the resources folder and the typo as the is no proof reading *
 ---
 
 ## 🧠 Goal
