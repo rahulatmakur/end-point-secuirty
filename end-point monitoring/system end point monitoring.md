@@ -18,7 +18,7 @@ tcpview is know for the more infromative and convinently presented subset of the
 
 *note :- the tcpview comes with cli version of it known as tcpvcon
 
-![30020d5c7ca15fc3930bd484506b77f6.png](../_resources/30020d5c7ca15fc3930bd484506b77f6-2.png)
+![30020d5c7ca15fc3930bd484506b77f6.png](../_resources/30020d5c7ca15fc3930bd484506b77f6.png)
 source:tryhackme
 As shown above, every connection initiated by a process is listed by the tool, which may aid in correlating the network events executed concurrently.
 
@@ -90,7 +90,7 @@ Task Manager is a built-in GUI-based Windows utility that allows users to see wh
 you can open task manger thought start menu or by using the short cut *crtl+shift+esc*
 if you are the windows user even if you user it casually you might be familiar with the interface which it easy to navigate . 
 the default tab when you open is the processes tab which is futher divide into the apps and the background task. Name, Status, CPU, and Memory these are the default coloums but you can add the extra columns my right clicking on the colums available 
-![e5ff2e67fea0889f2a1fb813932f791a.png](../_resources/e5ff2e67fea0889f2a1fb813932f791a-1.png)
+![e5ff2e67fea0889f2a1fb813932f791a.png](../_resources/e5ff2e67fea0889f2a1fb813932f791a.png)
 source : tryhackme
 The view looks a little better. Let's briefly go over each column (excluding Name, of course): 
 
@@ -105,7 +105,7 @@ The view looks a little better. Let's briefly go over each column (excluding Nam
 Let's move to the Details tab. This view provides some core processes that will be discussed in this room. Sort the PID column so that the PIDs are in ascending order.
 
 Add some additional columns to see more information about these processes. Good columns to add are Image path name and Command line.
-![afae459b58a2af414c78f1b404da7d61.png](../_resources/afae459b58a2af414c78f1b404da7d61-1.png)
+![afae459b58a2af414c78f1b404da7d61.png](../_resources/afae459b58a2af414c78f1b404da7d61.png)
 
 Task Manager is a powerful built-in Windows utility but lacks certain important information when analyzing processes, such as parent process information. It is another key column when identifying outliers. Back to svchost.exe, if the parent process for PID 384 is not services.exe, this will warrant further analysis
 
@@ -115,7 +115,7 @@ Task Manager doesn't show a Parent-Child process view. That is where other utili
 **The System process (process ID 4) is the home for a special kind of thread that runs only in kernel mode a kernel-mode system thread. System threads have all the attributes and contexts of regular user-mode threads (such as a hardware context, priority, and so on) but are different in that they run only in kernel-mode executing code loaded in system space, whether that is in Ntoskrnl.exe or in any other loaded device driver. In addition, system threads don't have a user process address space and hence must allocate any dynamic storage from operating system memory heaps, such as a paged or nonpaged pool**
 source:- windows 
 
-![524eaf05ac35bcd244960600db9c29f2.png](../_resources/524eaf05ac35bcd244960600db9c29f2-1.png)
+![524eaf05ac35bcd244960600db9c29f2.png](../_resources/524eaf05ac35bcd244960600db9c29f2.png)
 source:- tryhackme 
 What is unusual behaviour for this process?
 1. A parent process (aside from System Idle Process (0))
@@ -127,7 +127,7 @@ The next process is smss.exe (Session Manager Subsystem). This process, also kno
 Smss.exe starts csrss.exe (Windows subsystem) and wininit.exe in Session 0, an isolated Windows session for the operating system, and csrss.exe and winlogon.exe for Session 1, which is the user session. The first child instance creates child instances in new sessions, done by smss.exe copying itself into the new session and self-terminating
 
 what is normal ?
-![67e4c0bf1663f355b2c0e9a403dcb47d.png](../_resources/67e4c0bf1663f355b2c0e9a403dcb47d-1.png)
+![67e4c0bf1663f355b2c0e9a403dcb47d.png](../_resources/67e4c0bf1663f355b2c0e9a403dcb47d.png)
 Image Path:  %SystemRoot%\System32\smss.exe
 Parent Process:  System
 Number of Instances:  One master instance and child instance per session. The child instance exits after creating the session.
@@ -146,9 +146,9 @@ srss.exe (Client Server Runtime Process) is the user-mode side of the Windows su
 This process is also responsible for making the Windows API available to other processes, mapping drive letters, and handling the Windows shutdown process
 what is normal ?
 session 0(pid 392)
-![57ce49bdd46bd9ceffc235c6142c2ee4.png](../_resources/57ce49bdd46bd9ceffc235c6142c2ee4-1.png)
+![57ce49bdd46bd9ceffc235c6142c2ee4.png](../_resources/57ce49bdd46bd9ceffc235c6142c2ee4.png)
 Session 1 (PID 512)
-![67c920f3b0627774c9cef576d3691650.png](../_resources/67c920f3b0627774c9cef576d3691650-1.png)
+![67c920f3b0627774c9cef576d3691650.png](../_resources/67c920f3b0627774c9cef576d3691650.png)
 Image Path:  %SystemRoot%\System32\csrss.exe
 Parent Process:  Created by an instance of smss.exe
 Number of Instances:  Two or more
@@ -164,12 +164,12 @@ What is unusual?
 The Windows Initialization Process, wininit.exe, is responsible for launching services.exe (Service Control Manager), lsass.exe (Local Security Authority), and lsaiso.exe within Session 0. It is another critical Windows process that runs in the background, along with its child processes. 
 
 Wininit.exe process tree.
-![ed5b767f70bcca83abaa8ca3bae43816.png](../_resources/ed5b767f70bcca83abaa8ca3bae43816-1.png)
+![ed5b767f70bcca83abaa8ca3bae43816.png](../_resources/ed5b767f70bcca83abaa8ca3bae43816.png)
 
 Note: lsaiso.exe is a process associated with Credential Guard and KeyGuard. You will only see this process if Credential Guard is enabled. 
 
 What is normal?
-![510b79fed62cabf5e193c465d720605f.png](../_resources/510b79fed62cabf5e193c465d720605f-1.png)
+![510b79fed62cabf5e193c465d720605f.png](../_resources/510b79fed62cabf5e193c465d720605f.png)
 
 Wininit.exe properties.
 
@@ -191,7 +191,7 @@ This process also loads device drivers marked as auto-start into memory.
 
 This process is the parent to several other key processes: svchost.exe, spoolsv.exe, msmpeng.exe, and dllhost.exe, to name a few.
 What is normal?
-![25d41fe6d974bbbf0d28429962c3dd5c.png](../_resources/25d41fe6d974bbbf0d28429962c3dd5c-1.png)
+![25d41fe6d974bbbf0d28429962c3dd5c.png](../_resources/25d41fe6d974bbbf0d28429962c3dd5c.png)
 
 Image Path:  %SystemRoot%\System32\services.exe
 Parent Process:  wininit.exe
@@ -212,7 +212,7 @@ The Service Host (Host Process for Windows Services), or svchost.exe, is respons
 The services running in this process are implemented as DLLs. The DLL to implement is stored in the registry for the service under the Parameters subkey in ServiceDLL. The full path is HKLM\SYSTEM\CurrentControlSet\Services\SERVICE NAME\Parameters.
 
 What is normal?
-![786857895000f2bf9093f5ff01f39345.png](../_resources/786857895000f2bf9093f5ff01f39345-1.png)
+![786857895000f2bf9093f5ff01f39345.png](../_resources/786857895000f2bf9093f5ff01f39345.png)
 
 Image Path: %SystemRoot%\System32\svchost.exe
 Parent Process: services.exe
@@ -231,7 +231,7 @@ Per Wikipedia, "Local Security Authority Subsystem Service (LSASS) is a process 
 It creates security tokens for SAM (Security Account Manager), AD (Active Directory), and NETLOGON. It uses authentication packages specified in `HKLM\System\CurrentControlSet\Control\Lsa.`
 
 What is normal?
-![c672c86650faf3b34f1c08d844bf0c5b.png](../_resources/c672c86650faf3b34f1c08d844bf0c5b-1.png)
+![c672c86650faf3b34f1c08d844bf0c5b.png](../_resources/c672c86650faf3b34f1c08d844bf0c5b.png)
 
 
 Image Path:  %SystemRoot%\System32\lsass.exe
@@ -252,7 +252,7 @@ The Windows Logon, winlogon.exe, is responsible for handling the Secure Attentio
 
 This process is also responsible for loading the user profile. It loads the user's NTUSER.DAT into HKCU, and userinit.exe loads the user's shell
 What is normal?
-![b36297cb3ed261a053c897a7588ace53.png](../_resources/b36297cb3ed261a053c897a7588ace53-1.png)
+![b36297cb3ed261a053c897a7588ace53.png](../_resources/b36297cb3ed261a053c897a7588ace53.png)
 Image Path:  %SystemRoot%\System32\winlogon.exe
 Parent Process:  Created by an instance of smss.exe that exits, so analysis tools usually do not provide the parent process name.
 Number of Instances:  One or more
@@ -272,7 +272,7 @@ The last process we'll look at is Windows Explorer, explorer.exe. This process g
 As mentioned previously, the Winlogon process runs userinit.exe, which launches the value in HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell. Userinit.exe exits after spawning explorer.exe. Because of this, the parent process is non-existent. 
 What is normal?
 
-![68daf568ff135983d7be4307c1cee2bd.png](../_resources/68daf568ff135983d7be4307c1cee2bd-1.png)
+![68daf568ff135983d7be4307c1cee2bd.png](../_resources/68daf568ff135983d7be4307c1cee2bd.png)
 
 Image Path:  %SystemRoot%\explorer.exe
 Parent Process:  Created by userinit.exe and exits
